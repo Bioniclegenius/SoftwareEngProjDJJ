@@ -1,2 +1,2 @@
 Blaarg!
-Hello!
+See how it marks changed lines?
