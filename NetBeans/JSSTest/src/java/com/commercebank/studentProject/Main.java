@@ -5,10 +5,18 @@
  */
 package com.commercebank.studentProject;
 
+import org.bouncycastle.cert.*;
 /**
  *
  * @author Jackson
  */
 public class Main {
-    
+   String word;
+   public void setWord(String x){
+       word = x;
+   } 
+   
+   public int getLength(){
+       return word.length();
+   }
 }

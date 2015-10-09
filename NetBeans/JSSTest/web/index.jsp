@@ -13,5 +13,10 @@
     </head>
     <body>
         <h1>Hello World!</h1>
+        
+        <form action='responce.jsp'>
+            First Name: <input type='text' name='fName' /><br />
+            <button type='submit'>Click Me!</button>
+        </form>
     </body>
 </html>
