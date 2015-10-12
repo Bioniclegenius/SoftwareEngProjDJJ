@@ -39,7 +39,7 @@
               show2 = "hidden";
           }
         %>
-        <div class=' <%= show1 %>'>
+        <div class='<%= show1 %>'>
             <h1>Hello World!</h1>
             <form>
                 First Name: <input type='text' name='fName' /><br />
