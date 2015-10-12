@@ -1,0 +1,8 @@
+List of CSR items
+Country Name
+State or Province Name
+Locality Name
+Organization Name
+Organizational Unit Name
+Common Name
+Email Address (might be optional)
