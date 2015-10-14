@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Main Page</title>
+        <title>Welcome to Commerce!</title>
     </head>
     <body>
         <h1>Welcome to Commerce Bank!</h1>

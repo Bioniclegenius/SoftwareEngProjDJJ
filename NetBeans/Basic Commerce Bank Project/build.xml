@@ -7,8 +7,8 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="Jackson_Test_3" default="default" basedir=".">
-    <description>Builds, tests, and runs the project Jackson Test 3.</description>
+<project name="Basic_Commerce_Bank_Project" default="default" basedir=".">
+    <description>Builds, tests, and runs the project Basic Commerce Bank Project.</description>
     <import file="nbproject/build-impl.xml"/>
     <!--
 

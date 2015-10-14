@@ -15,8 +15,8 @@
     </head>
     <body>
         <%
-            String fN = request.getParameter("fName");
-            String lN = request.getParameter("lName");
+            String fN = request.getParameter("countryName");
+            String lN = request.getParameter("stateName");
             String x = code.process(fN, lN);
         %>
         <h1>Hello World!</h1>
