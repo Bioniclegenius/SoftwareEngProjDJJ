@@ -14,13 +14,12 @@
     <body>
         <h1>Hello World!</h1>
         <form action="generateResult.jsp">
-            Country Name: <input type="text" name="countryName" value="United States"><br>
-            State or Province Name: <input type="text" name="stateName"><br>
-            Locality Name: <input type="text" name="localityName"><br>
-            Organization Name: <input type="text" name="organizationName"><br>
-            Organizational Unit Name: <input type="text" name="organizationUnitName"><br>
-            Common Name: <input type="text" name="commonName"><br>
-            Email Address (might be optional: <input type="text" name="emailAddress">
+            Country Name: <input type="text" name="countryName" value="United States" required><br>
+            State or Province Name: <input type="text" name="stateName" value ="Missouri" required><br>
+            Locality Name: <input type="text" name="localityName" value="Kansas City" required><br>
+            Organization Name: <input type="text" name="organizationName" value="Commerce Bacshares Inc" required><br>
+            Organizational Unit Name: <input type="text" name="organizationUnitName" value="Information Technology" required><br>
+            Common Name: <input type="text" name="commonName" required><br>
             <button type="submit">Submit</button>
         </form>
     </body>
