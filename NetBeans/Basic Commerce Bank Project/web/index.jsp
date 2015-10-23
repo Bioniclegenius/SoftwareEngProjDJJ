@@ -13,10 +13,10 @@
     </head>
     <body>
         <h1>Welcome to Commerce Bank!</h1>
-        <form action="generate.jsp">
+        <form action="generate.jsp" method="post">
             <button type="submit">Generate Key</button>
         </form>
-        <form action="create.jsp">
+        <form action="create.jsp" method="post">
             <button type="submit">Generate Keystore</button>
         </form>
     </body>
