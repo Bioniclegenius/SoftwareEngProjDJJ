@@ -13,7 +13,7 @@
     </head>
     <body>
         <h1>Hello World!</h1>
-        <form action="generateResult.jsp">
+        <form action="generateResult.jsp" method="post">
             Country Name: <input type="text" name="countryName" value="United States" required><br>
             State or Province Name: <input type="text" name="stateName" value ="Missouri" required><br>
             Locality Name: <input type="text" name="localityName" value="Kansas City" required><br>

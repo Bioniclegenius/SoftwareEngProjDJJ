@@ -16,7 +16,7 @@
     <body>
         <%
             String country = request.getParameter("countryName");
-            String state = request.getParameter("text");
+            String state = request.getParameter("stateName");
             String locality = request.getParameter("localityName");
             String organization = request.getParameter("organizationName");
             String organizationUnit = request.getParameter("organizationUnitName");
@@ -28,6 +28,12 @@
             String CSR = make.getCSR();
         %>
         <h1>Hello World!</h1>
+        <p> TEST COUNTRY: <%= country %></p>
+        <p> TEST STATE: <%= state %></p>
+        <p> TEST LOCALITY: <%= locality %></p>
+        <p> TEST ORGANIZATION: <%= organization %></p>
+        <p> TEST ORGANIZATIONUNIT: <%= organizationUnit %></p>
+        <p> TEST COMMONNAME: <%= commonName %></p>
         <p>Private Key: <%= privateKey %></p>
         <p>Certificate Signing Request: <%= CSR %></p>
     </body>
