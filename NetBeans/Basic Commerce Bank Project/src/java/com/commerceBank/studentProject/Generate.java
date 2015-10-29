@@ -9,11 +9,13 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.Base64;
 import javax.security.auth.x500.X500Principal;
+import org.bouncycastle.jce.X509Principal;
 import org.bouncycastle.operator.ContentSigner;
+import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.pkcs.PKCS10CertificationRequestBuilder;
-import org.bouncycastle.operator.jcajce.*;
 import org.bouncycastle.pkcs.jcajce.JcaPKCS10CertificationRequestBuilder;
 /**
  *
@@ -21,7 +23,8 @@ import org.bouncycastle.pkcs.jcajce.JcaPKCS10CertificationRequestBuilder;
  */
 public class Generate {
     
-    String CSR = "", PK = "";
+    String CSR;
+    String PK;
     
     /**
      *
@@ -40,11 +43,12 @@ public class Generate {
         PublicKey publicKey = pair.getPublic();
         X500Principal subject = new X500Principal ("C=NO, ST=Trondheim, L=Trondheim, O=Senthadev, OU=Innovation, CN=www.senthadev.com, EMAILADDRESS=senthadev@gmail.com");
         ContentSigner signGen = new JcaContentSignerBuilder("SHA1withRSA").build(privateKey);
+        
         PKCS10CertificationRequestBuilder builder = new JcaPKCS10CertificationRequestBuilder(subject, publicKey);
         PKCS10CertificationRequest csr = builder.build(signGen);
         
-        PK = privateKey.toString();
-        CSR = csr.toString();
+        PK = Base64.getEncoder().encodeToString(privateKey.getEncoded());;
+        CSR = csr.toString();//Base64.getEncoder().encodeToString(csr.getEncoded());
         
 /*Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
         X500Name x500 = new X500Name("CN=..."); //enter your DN here

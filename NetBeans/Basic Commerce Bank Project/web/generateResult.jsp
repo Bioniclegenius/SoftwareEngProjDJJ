@@ -4,6 +4,8 @@
     Author     : Jackson
 --%>
 
+<%@page import="java.security.PrivateKey"%>
+<%@page import="org.bouncycastle.pkcs.PKCS10CertificationRequest"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page language="java" import="java.util.*" %>
 <jsp:useBean id="make" scope="session" class="com.commerceBank.studentProject.Generate"/>
@@ -35,6 +37,7 @@
         <p> TEST ORGANIZATIONUNIT: <%= organizationUnit %></p>
         <p> TEST COMMONNAME: <%= commonName %></p>
         <p>Private Key: <%= privateKey %></p>
+        <p>Private Key Length <%= privateKey.length() %> </p>
         <p>Certificate Signing Request: <%= CSR %></p>
     </body>
 </html>
