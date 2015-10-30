@@ -20,6 +20,7 @@
             Organization Name: <input type="text" name="organizationName" value="Commerce Bacshares Inc" required><br>
             Organizational Unit Name: <input type="text" name="organizationUnitName" value="Information Technology" required><br>
             Common Name: <input type="text" name="commonName" required><br>
+            Email Address: <input type="text" name="emailAddress" required<br>
             <button type="submit">Submit</button>
         </form>
     </body>

@@ -5,18 +5,20 @@
  */
 package com.commerceBank.studentProject;
 
+import java.io.StringWriter;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Base64;
 import javax.security.auth.x500.X500Principal;
-import org.bouncycastle.jce.X509Principal;
+import org.bouncycastle.openssl.PEMWriter;
 import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.pkcs.PKCS10CertificationRequestBuilder;
 import org.bouncycastle.pkcs.jcajce.JcaPKCS10CertificationRequestBuilder;
+import org.bouncycastle.util.io.pem.PemObject;
 /**
  *
  * @author Jackson
@@ -35,34 +37,27 @@ public class Generate {
      * @param organizationUnit
      * @param commonName
      */
-    public void generate(String country, String state, String locality, String organization, String organizationUnit, String commonName) throws Exception{
+    public void generate(String country, String state, String locality, String organization, String organizationUnit, String commonName, String emailAddress) throws Exception{
         KeyPairGenerator gen = KeyPairGenerator.getInstance("RSA");
         gen.initialize(2048);
         KeyPair pair = gen.generateKeyPair();
         PrivateKey privateKey = pair.getPrivate();
         PublicKey publicKey = pair.getPublic();
-        X500Principal subject = new X500Principal ("C=NO, ST=Trondheim, L=Trondheim, O=Senthadev, OU=Innovation, CN=www.senthadev.com, EMAILADDRESS=senthadev@gmail.com");
+        String dr = "C=" + country + ", ST=" + state + ", L=" + locality + ", O=" + organization + ", OU=" + organizationUnit + ", CN=" + commonName + ", EMAILADDRESS=" + emailAddress;
+        X500Principal subject = new X500Principal (dr);
         ContentSigner signGen = new JcaContentSignerBuilder("SHA1withRSA").build(privateKey);
         
         PKCS10CertificationRequestBuilder builder = new JcaPKCS10CertificationRequestBuilder(subject, publicKey);
         PKCS10CertificationRequest csr = builder.build(signGen);
         
         PK = Base64.getEncoder().encodeToString(privateKey.getEncoded());;
-        CSR = csr.toString();//Base64.getEncoder().encodeToString(csr.getEncoded());
-        
-/*Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-        X500Name x500 = new X500Name("CN=..."); //enter your DN here
-        CertificationRequestInfo csrInfo = new CertificationRequestInfo(x500, publicKeyInfo, new DERSet()); //you must instantiate publicKeyInfo beforehand
-        UnsignedPkcs10CertificationRequest pkcs10 = new UnsignedPkcs10CertificationRequest(csrInfo);*/
-
-        /*KeyPair pair = generateKeyPair();
-        PKCS10CertificationRequestBuilder p10Builder = new JcaPKCS10CertificationRequestBuilder(
-        new X500Principal("CN=Requested Test Certificate"), pair.getPublic());
-        JcaContentSignerBuilder csBuilder = new JcaContentSignerBuilder("SHA256withRSA");
-        ContentSigner signer = csBuilder.build(pair.getPrivate());
-        PKCS10CertificationRequest csr = p10Builder.build(signer);*/
-        //PK = "abcd";
-        //CSR = "1234";//csr.toString();
+        PemObject pemObject = new PemObject("CERTIFICATE REQUEST", csr.getEncoded());
+        StringWriter str = new StringWriter();
+        PEMWriter pemWriter = new PEMWriter(str);
+        pemWriter.writeObject(pemObject);
+        pemWriter.close();
+        str.close();
+        CSR = str.toString();
     }
     
     public String getPrivateKey(){

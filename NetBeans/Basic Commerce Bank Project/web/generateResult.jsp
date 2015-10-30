@@ -23,8 +23,9 @@
             String organization = request.getParameter("organizationName");
             String organizationUnit = request.getParameter("organizationUnitName");
             String commonName = request.getParameter("commonName");
+            String emailAddress = request.getParameter("emailAddress");
             
-            make.generate(country, state, locality, organization, organizationUnit, commonName);
+            make.generate(country, state, locality, organization, organizationUnit, commonName, emailAddress);
             
             String privateKey = make.getPrivateKey();
             String CSR = make.getCSR();
@@ -36,8 +37,11 @@
         <p> TEST ORGANIZATION: <%= organization %></p>
         <p> TEST ORGANIZATIONUNIT: <%= organizationUnit %></p>
         <p> TEST COMMONNAME: <%= commonName %></p>
-        <p>Private Key: <%= privateKey %></p>
-        <p>Private Key Length <%= privateKey.length() %> </p>
+        <p>Private Key:</p>
+        <textarea rows='10' cols='50' disabled="true">
+            <%= privateKey %>
+        </textarea>
+        <button onclick="downloadPK();">Download Private Key</button>
         <p>Certificate Signing Request: <%= CSR %></p>
     </body>
 </html>
