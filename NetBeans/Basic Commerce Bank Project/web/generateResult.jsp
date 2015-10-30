@@ -12,11 +12,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Generate CSR & Private Key</title>
-    </head>
-    <body>
-        <%
+            <%
             String country = request.getParameter("countryName");
             String state = request.getParameter("stateName");
             String locality = request.getParameter("localityName");
@@ -30,6 +26,36 @@
             String privateKey = make.getPrivateKey();
             String CSR = make.getCSR();
         %>
+        <script type="text/javascript">
+            function downloadPK(){
+                var a = window.document.createElement('a');
+                a.href = window.URL.createObjectURL(new Blob([ ' <%= privateKey %> '], {type: 'text/csv'}));
+                a.download = 'privatekey.txt';
+
+                // Append anchor to body.
+                document.body.appendChild(a);
+                a.click();
+
+                // Remove anchor from body
+                document.body.removeChild(a);
+            }
+            function downloadCSR(){
+                var a = window.document.createElement('a');
+                a.href = window.URL.createObjectURL(new Blob([ ' <%= CSR %> '], {type: 'text/csv'}));
+                a.download = 'csr.txt';
+
+                // Append anchor to body.
+                document.body.appendChild(a);
+                a.click();
+
+                // Remove anchor from body
+                document.body.removeChild(a);
+            }
+        </script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Generate CSR & Private Key</title>
+    </head>
+    <body>
         <h1>Hello World!</h1>
         <p> TEST COUNTRY: <%= country %></p>
         <p> TEST STATE: <%= state %></p>
@@ -37,11 +63,17 @@
         <p> TEST ORGANIZATION: <%= organization %></p>
         <p> TEST ORGANIZATIONUNIT: <%= organizationUnit %></p>
         <p> TEST COMMONNAME: <%= commonName %></p>
+        
         <p>Private Key:</p>
-        <textarea rows='10' cols='50' disabled="true">
+        <textarea rows='10' cols='80' disabled="true">
             <%= privateKey %>
-        </textarea>
-        <button onclick="downloadPK();">Download Private Key</button>
-        <p>Certificate Signing Request: <%= CSR %></p>
+        </textarea><br>
+        <button onclick="downloadPK();">Download Private Key</button><br>
+        
+        <p>Certificate Signing Request:</p>
+        <textarea rows='10' cols='80' disabled="true">
+            <%= CSR %>
+        </textarea><br>
+        <button onclick="downloadCSR();">Download Certificate Signing Request</button>
     </body>
 </html>
