@@ -9,15 +9,21 @@ import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.security.KeyFactory;
 import java.security.cert.Certificate;
 import java.security.KeyStore;
+import java.security.PrivateKey;
 import java.security.cert.CertificateFactory;
+import java.security.spec.PKCS8EncodedKeySpec;
 
 /**
  *
  * @author Jackson
  */
 public class CreateKeystore {
+    
+    KeyStore key;
+    
     public void makeKeystore(String cert, String pk, String ps, String alias) throws Exception{
         KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
         // get user password and file input stream
@@ -25,7 +31,7 @@ public class CreateKeystore {
 
         FileInputStream fis = null;
         try {
-            fis = new java.io.FileInputStream("keyStoreName");
+            fis = new java.io.FileInputStream("name.keystore");
             ks.load(fis, password);
             
             // Add the certificate
@@ -35,7 +41,13 @@ public class CreateKeystore {
             ks.setCertificateEntry(alias, certs);
             
             // Add the Private key
-            //Check out this page https://www.nealgroothuis.name/import-a-private-key-into-a-java-keystore/
+            byte[] encodedKey = new byte[(int)pk.length()];
+            InputStream keyInputStream = new ByteArrayInputStream(pk.getBytes());
+            keyInputStream.read(encodedKey);
+            keyInputStream.close();
+            KeyFactory rSAKeyFactory = KeyFactory.getInstance("X.509");
+            PrivateKey privateKey = rSAKeyFactory.generatePrivate(new PKCS8EncodedKeySpec(encodedKey));
+            ks.setEntry(alias, new KeyStore.PrivateKeyEntry(privateKey, null), null);
 
             // Save the new keystore contents
             FileOutputStream out = new FileOutputStream("name.keystore");
