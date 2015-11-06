@@ -29,10 +29,11 @@ public class CreateKeystore {
         // get user password and file input stream
         char[] password = ps.toCharArray();
 
-        FileInputStream fis = null;
+        //FileInputStream fis = null;
         try {
-            fis = new java.io.FileInputStream("name.keystore");
-            ks.load(fis, password);
+            //fis = new java.io.FileInputStream("test.jks");//System.io.Path.getTempPath() + "test.jks");
+            //Use Temp directory to save file and download it!
+            //ks.load(fis, password);
             
             // Add the certificate
             CertificateFactory cf = CertificateFactory.getInstance("X.509");
@@ -50,14 +51,16 @@ public class CreateKeystore {
             ks.setEntry(alias, new KeyStore.PrivateKeyEntry(privateKey, null), null);
 
             // Save the new keystore contents
-            FileOutputStream out = new FileOutputStream("name.keystore");
+            FileOutputStream out = new FileOutputStream("test.jks");
             ks.store(out, password);
             out.close();
+            key = ks;
         } finally {
-            if (fis != null) {
-                fis.close();
-            }
         }
         
+    }
+    
+    public KeyStore getKey(){
+        return key;
     }
 }
