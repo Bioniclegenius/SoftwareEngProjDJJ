@@ -13,9 +13,11 @@
     </head>
     <body>
         <h1>Hello World!</h1>
-            <form method="post" action="createResult.jsp" enctype="multipart/form-data">>
-                Certificate<input type="file" name="certInput" size="50" /><br />
-                PK<input type="file" name="pkInput" size="50"/><br>
+        <form method="post" action="createResult.jsp" ><!--enctype="multipart/form-data"> -->
+                Certificate<input type="text" name="certInput"><br>
+                Private Key<input type="text" name="pkInput"><br>
+                <!--Certificate<input type="file" name="certInput" size="50" /><br />
+                PK<input type="file" name="pkInput" size="50"/><br>-->
                 Password for Keystore<input type="text" name="password" value="changeit" required="true"><br>
                 Private Key Entry Alias Name<input type="text" name="alias"><br>
                 <button type="submit">Generate Keystore</button>

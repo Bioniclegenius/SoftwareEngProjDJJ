@@ -15,6 +15,7 @@ import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.cert.CertificateFactory;
 import java.security.spec.PKCS8EncodedKeySpec;
+import org.apache.commons.io.IOUtils;
 
 /**
  *
@@ -37,7 +38,7 @@ public class CreateKeystore {
             
             // Add the certificate
             CertificateFactory cf = CertificateFactory.getInstance("X.509");
-            InputStream cif = new ByteArrayInputStream(cert.getBytes());
+            InputStream cif = IOUtils.toInputStream(cert, "UTF-8");//new ByteArrayInputStream(cert.getBytes("UTF-8"));
             Certificate certs = (Certificate) cf.generateCertificate(cif);
             ks.setCertificateEntry(alias, certs);
             
