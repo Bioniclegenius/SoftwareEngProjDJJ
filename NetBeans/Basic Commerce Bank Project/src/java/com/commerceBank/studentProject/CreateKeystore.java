@@ -5,21 +5,19 @@
  */
 package com.commerceBank.studentProject;
 
-import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.security.KeyFactory;
 import java.security.cert.Certificate;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.cert.CertificateFactory;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
-import org.apache.commons.io.IOUtils;
+import java.security.spec.X509EncodedKeySpec;
+import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 
 /**
  *
@@ -34,18 +32,13 @@ public class CreateKeystore {
         // get user password and file input stream
         char[] password = ps.toCharArray();
 
-        //FileInputStream fis = null;
         try {
-            //fis = new java.io.FileInputStream(new File("test.jks"));//System.io.Path.getTempPath() + "test.jks");
-            //Use Temp directory to save file and download it!
-            //ks.load(fis, password);
             ks.load(null, null);
             
             // Add the certificate
-            //insert Chars "\r\n" after --Begin Certificate--
             int index = cert.indexOf("-----BEGIN CERTIFICATE-----");
             index += 27;//Length of above string
-            cert = cert.substring(0, index) + "\r\n" + cert.substring(index + 1);
+            cert = cert.substring(0, index) + "\r\n" + cert.substring(index + 1);//Error thrown if string not entered
             CertificateFactory cf = CertificateFactory.getInstance("X.509");
             ByteArrayInputStream cif = new ByteArrayInputStream(cert.getBytes("UTF-8"));
             Certificate certs = (Certificate) cf.generateCertificate(cif);
@@ -56,10 +49,9 @@ public class CreateKeystore {
             InputStream keyInputStream = new ByteArrayInputStream(pk.getBytes());
             keyInputStream.read(encodedKey);
             keyInputStream.close();
-            KeyFactory rSAKeyFactory = KeyFactory.getInstance("X.509");
-            PrivateKey privateKey = rSAKeyFactory.generatePrivate(new PKCS8EncodedKeySpec(encodedKey));
+            KeyFactory rsaKeyFactory = KeyFactory.getInstance("RSA");
+            RSAPrivateKey privateKey = (RSAPrivateKey) rsaKeyFactory.generatePrivate(new PKCS8EncodedKeySpec(pk.getBytes()));//encodedKey));//HERE
             ks.setEntry(alias, new KeyStore.PrivateKeyEntry(privateKey, null), null);
-
             // Save the new keystore contents
             FileOutputStream out = new FileOutputStream("test.jks");
             ks.store(out, password);

@@ -10,7 +10,6 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.util.Base64;
 import javax.security.auth.x500.X500Principal;
 import org.bouncycastle.openssl.PEMWriter;
 import org.bouncycastle.operator.ContentSigner;
@@ -19,6 +18,7 @@ import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.pkcs.PKCS10CertificationRequestBuilder;
 import org.bouncycastle.pkcs.jcajce.JcaPKCS10CertificationRequestBuilder;
 import org.bouncycastle.util.io.pem.PemObject;
+import org.bouncycastle.util.io.pem.PemWriter;
 /**
  *
  * @author Jackson
@@ -50,10 +50,18 @@ public class Generate {
         PKCS10CertificationRequestBuilder builder = new JcaPKCS10CertificationRequestBuilder(subject, publicKey);
         PKCS10CertificationRequest csr = builder.build(signGen);
         
-        PK = Base64.getEncoder().encodeToString(privateKey.getEncoded());;
-        PemObject pemObject = new PemObject("CERTIFICATE REQUEST", csr.getEncoded());
+        //PrivateKey to String
+        PemObject pemObject = new PemObject("RSA PRIVATE KEY", privateKey.getEncoded());
+        StringWriter stringWriter = new StringWriter();
+        PemWriter pemWriter = new PemWriter(stringWriter);
+        pemWriter.writeObject(pemObject);
+        pemWriter.close();
+        PK = stringWriter.toString();
+        
+        //CSR to String NOTE: Reuses object names from PrivateKey to String
+        pemObject = new PemObject("CERTIFICATE REQUEST", csr.getEncoded());
         StringWriter str = new StringWriter();
-        PEMWriter pemWriter = new PEMWriter(str);
+        pemWriter = new PEMWriter(str);//PEMWriter
         pemWriter.writeObject(pemObject);
         pemWriter.close();
         str.close();
