@@ -13,11 +13,8 @@ import java.security.cert.Certificate;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.cert.CertificateFactory;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
-import org.bouncycastle.pkcs.PKCS10CertificationRequest;
+import org.bouncycastle.util.encoders.Base64;
 
 /**
  *
@@ -33,6 +30,7 @@ public class CreateKeystore {
         char[] password = ps.toCharArray();
 
         try {
+            
             ks.load(null, null);
             
             // Add the certificate
@@ -50,8 +48,10 @@ public class CreateKeystore {
             keyInputStream.read(encodedKey);
             keyInputStream.close();
             KeyFactory rsaKeyFactory = KeyFactory.getInstance("RSA");
-            RSAPrivateKey privateKey = (RSAPrivateKey) rsaKeyFactory.generatePrivate(new PKCS8EncodedKeySpec(pk.getBytes()));//encodedKey));//HERE
+            PKCS8EncodedKeySpec ksp = new PKCS8EncodedKeySpec(Base64.decode(pk));
+            PrivateKey privateKey = rsaKeyFactory.generatePrivate(ksp);//new PKCS8EncodedKeySpec(pk.getBytes()));//encodedKey));//HERE
             ks.setEntry(alias, new KeyStore.PrivateKeyEntry(privateKey, null), null);
+            
             // Save the new keystore contents
             FileOutputStream out = new FileOutputStream("test.jks");
             ks.store(out, password);
