@@ -27,6 +27,10 @@ public class Generate {
     
     String CSR;
     String PK;
+    private final String CSR_START = "-----BEGIN CERTIFICATE REQUEST-----";
+    private final String CSR_END = "-----END CERTIFICATE REQUEST-----";
+    private final String RSA_START = "-----BEGIN RSA PRIVATE KEY-----";
+    private final String RSA_END = "-----END RSA PRIVATE KEY-----";
     
     /**
      *
@@ -58,6 +62,15 @@ public class Generate {
         pemWriter.close();
         PK = stringWriter.toString();
         
+        //Remove Whitespace
+        int pkStart = PK.indexOf(RSA_START);
+        if(pkStart == -1)
+            pkStart = 0;
+        int pkEnd = PK.indexOf(RSA_END);
+        pkEnd += RSA_END.length();//Need last index of the string
+        PK = PK.substring(pkStart, pkEnd);
+        
+        
         //CSR to String NOTE: Reuses object names from PrivateKey to String
         pemObject = new PemObject("CERTIFICATE REQUEST", csr.getEncoded());
         StringWriter str = new StringWriter();
@@ -66,6 +79,14 @@ public class Generate {
         pemWriter.close();
         str.close();
         CSR = str.toString();
+        
+        /*//Remove Whitespace
+        int csrStart = PK.indexOf(CSR_START);
+        if(csrStart == -1)
+            csrStart = 0;
+        int csrEnd = PK.indexOf(CSR_END);
+        csrEnd += CSR_END.length();//Need last index of the string
+        CSR = CSR.substring(csrStart, csrEnd);*/
     }
     
     public String getPrivateKey(){
