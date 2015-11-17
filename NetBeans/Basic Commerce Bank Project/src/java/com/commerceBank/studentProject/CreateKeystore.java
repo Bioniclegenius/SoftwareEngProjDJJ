@@ -58,7 +58,12 @@ public class CreateKeystore {
             KeyFactory rsaKeyFactory = KeyFactory.getInstance("RSA");
             PKCS8EncodedKeySpec ksp = new PKCS8EncodedKeySpec(Base64.decode(pk));
             PrivateKey privateKey = rsaKeyFactory.generatePrivate(ksp);
-            ks.setEntry(alias, new KeyStore.PrivateKeyEntry(privateKey, ks.getCertificateChain(alias)), null);
+            
+            KeyStore.ProtectionParameter protParam = new KeyStore.PasswordProtection(password);
+            Certificate[] chain = new Certificate[1];
+            chain[0] = certs;
+            KeyStore.PrivateKeyEntry pkEntry = new KeyStore.PrivateKeyEntry(privateKey, chain);
+            ks.setEntry(alias, pkEntry, protParam);
             
             // Save the new keystore contents
             FileOutputStream out = new FileOutputStream("test.jks");
@@ -66,6 +71,7 @@ public class CreateKeystore {
             out.close();
             key = ks;
         } finally {
+            
         }
         
     }

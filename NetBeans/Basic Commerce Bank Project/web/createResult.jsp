@@ -17,33 +17,20 @@
         String pk = request.getParameter("pkInput");
         String password = request.getParameter("password");
         String alias = request.getParameter("alias");
-        create.makeKeystore(
-                certificate, 
-                pk, 
-                password, 
-                alias);
+        create.makeKeystore(certificate, pk, password, alias);
         key = create.getKey();
+        //response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-Disposition", "attachment;filename=" + key);
     %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <script type="text/javascript">
-            function download(){
-                var a = window.document.createElement('a');
-                a.href = window.URL.createObjectURL(new Blob([ ' <%= key %> '], {type: 'text/csv'}));
-                a.download = 'privatekey.txt';
-
-                // Append anchor to body.
-                document.body.appendChild(a);
-                a.click();
-
-                // Remove anchor from body
-                document.body.removeChild(a);
-            }
-        </script>
     </head>
     <body>
         <h1>Hello World!</h1>
-        <button onclick="download();">Download</button>
+        <p><%= certificate %></p>
+        <p><%= pk %></p>
+        <p><%= password %></p>
+        <p><%= alias %></p>
     </body>
 </html>
