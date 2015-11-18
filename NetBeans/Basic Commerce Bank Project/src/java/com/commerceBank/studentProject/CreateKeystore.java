@@ -6,6 +6,7 @@
 package com.commerceBank.studentProject;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.security.KeyFactory;
@@ -13,7 +14,6 @@ import java.security.cert.Certificate;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.cert.CertificateFactory;
-import java.security.spec.KeySpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 import org.bouncycastle.util.encoders.Base64;
 
@@ -66,7 +66,7 @@ public class CreateKeystore {
             ks.setEntry(alias, pkEntry, protParam);
             
             // Save the new keystore contents
-            FileOutputStream out = new FileOutputStream("test.jks");
+            FileOutputStream out = new FileOutputStream("test.keystore");
             ks.store(out, password);
             out.close();
             key = ks;
@@ -76,7 +76,7 @@ public class CreateKeystore {
         
     }
     
-    public KeyStore getKey(){
-        return key;
+    public File getKey(){
+        return new File("test.keystore");//key;
     }
 }

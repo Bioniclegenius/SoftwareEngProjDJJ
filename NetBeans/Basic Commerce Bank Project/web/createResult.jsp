@@ -4,6 +4,7 @@
     Author     : Jackson
 --%>
 
+<%@page import="java.io.File"%>
 <%@page import="java.security.KeyStore"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page language="java" import="java.util.*" %>
@@ -12,7 +13,7 @@
 <!DOCTYPE html>
 <html>
     <%
-        KeyStore key = null;
+        File key = null;
         String certificate = request.getParameter("certInput");
         String pk = request.getParameter("pkInput");
         String password = request.getParameter("password");
