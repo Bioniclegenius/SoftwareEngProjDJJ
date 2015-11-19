@@ -4,34 +4,25 @@
     Author     : Jackson
 --%>
 
+<%@page import="java.io.FileOutputStream"%>
 <%@page import="java.io.File"%>
 <%@page import="java.security.KeyStore"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page language="java" import="java.util.*" %>
 <jsp:useBean id="create" scope="session" class="com.commerceBank.studentProject.CreateKeystore"/>
-
-<!DOCTYPE html>
-<html>
-    <%
-        File key = null;
-        String certificate = request.getParameter("certInput");
-        String pk = request.getParameter("pkInput");
-        String password = request.getParameter("password");
-        String alias = request.getParameter("alias");
-        create.makeKeystore(certificate, pk, password, alias);
-        key = create.getKey();
-        //response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-Disposition", "attachment;filename=" + key);
-    %>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-        <p><%= certificate %></p>
-        <p><%= pk %></p>
-        <p><%= password %></p>
-        <p><%= alias %></p>
-    </body>
-</html>
+<%
+    KeyStore key = null;
+    String certificate = request.getParameter("certInput");
+    String pk = request.getParameter("pkInput");
+    String password = request.getParameter("password");
+    String alias = request.getParameter("alias");
+    create.makeKeystore(certificate, pk, password, alias);
+    key = create.getKey();
+            // Save the new keystore contents
+            File file = new File ("test.keystore");
+            FileOutputStream out2 = new FileOutputStream(file);
+            key.store(out2, password.toCharArray());
+            out2.close();
+    //response.setContentType("application/vnd.ms-excel");
+    //response.setHeader("Content-Disposition", "attachment;filename=" + key);*
+%>

@@ -24,6 +24,7 @@ import org.bouncycastle.util.encoders.Base64;
 public class CreateKeystore {
     
     KeyStore key;
+    File file;
     private final String CERT_START = "-----BEGIN CERTIFICATE-----";
     private final String RSA_START = "-----BEGIN RSA PRIVATE KEY-----";
     private final String RSA_END = "-----END RSA PRIVATE KEY-----";
@@ -65,10 +66,7 @@ public class CreateKeystore {
             KeyStore.PrivateKeyEntry pkEntry = new KeyStore.PrivateKeyEntry(privateKey, chain);
             ks.setEntry(alias, pkEntry, protParam);
             
-            // Save the new keystore contents
-            FileOutputStream out = new FileOutputStream("test.keystore");
-            ks.store(out, password);
-            out.close();
+            
             key = ks;
         } finally {
             
@@ -76,7 +74,7 @@ public class CreateKeystore {
         
     }
     
-    public File getKey(){
-        return new File("test.keystore");//key;
+    public KeyStore getKey(){
+        return key;
     }
 }
