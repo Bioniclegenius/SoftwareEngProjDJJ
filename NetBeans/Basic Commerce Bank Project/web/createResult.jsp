@@ -17,12 +17,25 @@
     String password = request.getParameter("password");
     String alias = request.getParameter("alias");
     create.makeKeystore(certificate, pk, password, alias);
-    key = create.getKey();
-            // Save the new keystore contents
-            File file = new File ("test.keystore");
-            FileOutputStream out2 = new FileOutputStream(file);
-            key.store(out2, password.toCharArray());
-            out2.close();
+    key = create.getKey(); 
+    byte[] ks = create.getKeyStore();/*
+             */
     //response.setContentType("application/vnd.ms-excel");
     //response.setHeader("Content-Disposition", "attachment;filename=" + key);*
 %>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="fileSaver.js"></script>
+        <script type="text/javascript">
+            function download(){
+                var blob = new Blob([<%= ks.toString() %>], {type: "text/plain;charset=utf-8"});
+                saveAs(blob, "hello world.txt")
+            }
+        </script>
+    </head>
+    <body>
+        <input type="button" onclick="download();" value="Click Me!">
+    </body>
+</html>

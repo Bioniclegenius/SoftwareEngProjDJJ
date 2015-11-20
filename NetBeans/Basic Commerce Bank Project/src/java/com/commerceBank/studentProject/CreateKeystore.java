@@ -6,6 +6,7 @@
 package com.commerceBank.studentProject;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -24,6 +25,7 @@ import org.bouncycastle.util.encoders.Base64;
 public class CreateKeystore {
     
     KeyStore key;
+    byte[] keyStore;
     File file;
     private final String CERT_START = "-----BEGIN CERTIFICATE-----";
     private final String RSA_START = "-----BEGIN RSA PRIVATE KEY-----";
@@ -65,16 +67,29 @@ public class CreateKeystore {
             chain[0] = certs;
             KeyStore.PrivateKeyEntry pkEntry = new KeyStore.PrivateKeyEntry(privateKey, chain);
             ks.setEntry(alias, pkEntry, protParam);
-            
-            
+            // Save the new keystore contents
+            /*File file = new File ("test.keystore");
+            FileOutputStream out2 = new FileOutputStream(file);
+            ks.store(out2, password);
+            out2.close();
             key = ks;
+                    */
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            ks.store(out, password);
+            //keyStore = "";
+            keyStore = out.toByteArray();
+            out.close();
+            
         } finally {
             
-        }
-        
+        }    
     }
     
     public KeyStore getKey(){
         return key;
+    }
+    
+    public byte[] getKeyStore(){
+        return keyStore;
     }
 }
