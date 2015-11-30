@@ -41,13 +41,13 @@ public class Generate {
      * @param organizationUnit
      * @param commonName
      */
-    public void generate(String country, String state, String locality, String organization, String organizationUnit, String commonName, String emailAddress) throws Exception{
+    public void generate(String country, String state, String locality, String organization, String organizationUnit, String commonName) throws Exception{
         KeyPairGenerator gen = KeyPairGenerator.getInstance("RSA");
         gen.initialize(2048);
         KeyPair pair = gen.generateKeyPair();
         PrivateKey privateKey = pair.getPrivate();
         PublicKey publicKey = pair.getPublic();
-        String dr = "C=" + country + ", ST=" + state + ", L=" + locality + ", O=" + organization + ", OU=" + organizationUnit + ", CN=" + commonName + ", EMAILADDRESS=" + emailAddress;
+        String dr = "C=" + country + ", ST=" + state + ", L=" + locality + ", O=" + organization + ", OU=" + organizationUnit + ", CN=" + commonName;
         X500Principal subject = new X500Principal (dr);
         ContentSigner signGen = new JcaContentSignerBuilder("SHA1withRSA").build(privateKey);
         

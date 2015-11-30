@@ -26,20 +26,3 @@ response.setHeader("Content-Disposition", "attachment; filename=file.keystore");
 response.getOutputStream().write(ks, 0, ks.length);
 response.getOutputStream().flush();
 %>
-
-
-<!DOCTYPE html>
-<html>
-    <head>
-        <script src="fileSaver.js"></script>
-        <script type="text/javascript">
-            function download(){
-                var blob = new Blob([<%= ks.toString() %>], {type: "text/plain;charset=utf-8"});
-                saveAs(blob, "hello world.txt")
-            }
-        </script>
-    </head>
-    <body>
-        <input type="button" onclick="download();" value="Click Me!">
-    </body>
-</html>

@@ -79,10 +79,6 @@ public class CreateKeystore {
                 certChain = (Certificate[])c.toArray();
             }
             certStream.close();
-            /*
-            chain = new Certificate[1];
-            chain[0] = certs;
-                    */
             KeyStore.PrivateKeyEntry pkEntry = new KeyStore.PrivateKeyEntry(privateKey, certChain);
             ks.setEntry(alias, pkEntry, protParam);
             ByteArrayOutputStream out = new ByteArrayOutputStream();

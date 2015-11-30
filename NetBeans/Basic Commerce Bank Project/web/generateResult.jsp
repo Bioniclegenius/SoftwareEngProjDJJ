@@ -19,9 +19,8 @@
             String organization = request.getParameter("organizationName");
             String organizationUnit = request.getParameter("organizationUnitName");
             String commonName = request.getParameter("commonName");
-            String emailAddress = request.getParameter("emailAddress");
             
-            make.generate(country, state, locality, organization, organizationUnit, commonName, emailAddress);
+            make.generate(country, state, locality, organization, organizationUnit, commonName);
             
             String privateKey = make.getPrivateKey();
             String CSR = make.getCSR();
