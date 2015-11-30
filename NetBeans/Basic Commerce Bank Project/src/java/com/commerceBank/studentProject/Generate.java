@@ -10,7 +10,18 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.Vector;
 import javax.security.auth.x500.X500Principal;
+import org.bouncycastle.asn1.ASN1Encodable;
+import org.bouncycastle.asn1.ASN1ObjectIdentifier;
+import org.bouncycastle.asn1.DEROctetString;
+import org.bouncycastle.asn1.DERSet;
+import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
+import org.bouncycastle.asn1.x509.Attribute;
+import org.bouncycastle.asn1.x509.GeneralName;
+import org.bouncycastle.asn1.x509.GeneralNames;
+import org.bouncycastle.asn1.x509.X509Extension;
+import org.bouncycastle.asn1.x509.X509Extensions;
 import org.bouncycastle.openssl.PEMWriter;
 import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
@@ -19,6 +30,7 @@ import org.bouncycastle.pkcs.PKCS10CertificationRequestBuilder;
 import org.bouncycastle.pkcs.jcajce.JcaPKCS10CertificationRequestBuilder;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemWriter;
+import org.bouncycastle.x509.X509V1CertificateGenerator;
 /**
  *
  * @author Jackson
@@ -41,7 +53,7 @@ public class Generate {
      * @param organizationUnit
      * @param commonName
      */
-    public void generate(String country, String state, String locality, String organization, String organizationUnit, String commonName) throws Exception{
+    public void generate(String country, String state, String locality, String organization, String organizationUnit, String commonName, String altName) throws Exception{
         KeyPairGenerator gen = KeyPairGenerator.getInstance("RSA");
         gen.initialize(2048);
         KeyPair pair = gen.generateKeyPair();
@@ -52,6 +64,18 @@ public class Generate {
         ContentSigner signGen = new JcaContentSignerBuilder("SHA1withRSA").build(privateKey);
         
         PKCS10CertificationRequestBuilder builder = new JcaPKCS10CertificationRequestBuilder(subject, publicKey);
+        
+        /*//Subject Alternate names
+        GeneralNames subjectAltName = new GeneralNames(new 
+        GeneralName(GeneralName.rfc822Name, altName)); 
+        Vector oids = new Vector(); 
+        Vector values = new Vector(); 
+        oids.add(X509Extensions.SubjectAlternativeName); 
+        values.add(new X509Extension(false, new DEROctetString(subjectAltName))); 
+        X509Extensions extensions = new X509Extensions(oids, values); 
+        builder.addAttribute(PKCSObjectIdentifiers.pkcs_9_at_extensionRequest, new 
+        DERSet(extensions));        
+        */
         PKCS10CertificationRequest csr = builder.build(signGen);
         
         //PrivateKey to String
