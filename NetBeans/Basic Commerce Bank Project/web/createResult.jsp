@@ -11,13 +11,11 @@
 <%@ page language="java" import="java.util.*" %>
 <jsp:useBean id="create" scope="session" class="com.commerceBank.studentProject.CreateKeystore"/>
 <%
-    KeyStore key = null;
     String certificate = request.getParameter("certInput");
     String pk = request.getParameter("pkInput");
     String password = request.getParameter("password");
     String alias = request.getParameter("alias");
     create.makeKeystore(certificate, pk, password, alias);
-    key = create.getKey(); 
     byte[] ks = create.getKeyStore();/*
              */
     //response.setContentType("application/vnd.ms-excel");
