@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Commerce Bank Certificate Creator</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script language="JavaScript">
+      ClipBoard=function(watcopy){
+        document.getElementById(watcopy).select();
+      }
+      enableUpload=function(){
+        document.getElementById('upload').disabled=false;
+      }
+    </script>
+  </head>
+
+  <body>
+    <div id = "title">
+      <h1>Commerce Bank Certificate Creator</h1>
+      <hr>
+      <img src="icon.png" id = "icon">
+    </div>
+    <table style="width: 100%;">
+      <tr>
+        <td id = "leftHalf">
+          <b>CSR</b>
+          <br /><br />
+          <textarea id="holdtext" style="display: none;"></textarea>
+          <textarea id="CSROutput" rows = "6" style="width: 50%;" readonly = "true"></textarea>
+          <button onclick="ClipBoard('CSROutput');">Select</button><br /><br />
+          <b>Private key</b>
+          <br /><br />
+          <textarea id="PKOutput" rows = "6" style="width: 50%;" readonly = "true"></textarea>
+          <button onclick="ClipBoard('PKOutput');">Select</button>
+          <br />
+          <button>Generate</button>
+        </td>
+        <td id = "rightHalf">
+          <b>Certificate</b>
+          <br /><br />
+          <textarea rows = "6" style="width: 50%;"></textarea>
+          <br />
+          <button id="upload" disabled>Upload</button>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
