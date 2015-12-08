@@ -48,20 +48,7 @@ public class Generate {
         ContentSigner signGen = new JcaContentSignerBuilder("SHA1withRSA").build(privateKey);
         
         PKCS10CertificationRequestBuilder builder = new JcaPKCS10CertificationRequestBuilder(subject, publicKey);
-        
-        /*//Subject Alternate names
-        GeneralNames subjectAltName = new GeneralNames(new 
-        GeneralName(GeneralName.rfc822Name, altName)); 
-        Vector oids = new Vector(); 
-        Vector values = new Vector(); 
-        oids.add(X509Extensions.SubjectAlternativeName); 
-        values.add(new X509Extension(false, new DEROctetString(subjectAltName))); 
-        X509Extensions extensions = new X509Extensions(oids, values); 
-        builder.addAttribute(PKCSObjectIdentifiers.pkcs_9_at_extensionRequest, new 
-        DERSet(extensions));        
-        */
         PKCS10CertificationRequest csr = builder.build(signGen);
-        
         //PrivateKey to String
         PemObject pemObject = new PemObject("RSA PRIVATE KEY", privateKey.getEncoded());
         StringWriter stringWriter = new StringWriter();
