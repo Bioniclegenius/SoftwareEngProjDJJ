@@ -10,6 +10,7 @@
   <head>
     <title>Commerce Bank Certificate Creator</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="shortcut icon" href="icon.ico">
   </head>
 
   <body>
@@ -17,7 +18,7 @@
       <h1>CSR/Private Key Generator</h1>
       <hr>
     </div>
-    <form action="index.jsp">
+    <form action="index.jsp" method="post">
       <table>
         <tr>
           <td>Country:</td><td><input type="text" name="countryName" value="United States" style="width: 200px;" required /></td>
@@ -35,13 +36,10 @@
           <td>Organizational Unit:</td><td><input type="text" name="organizationUnitName" value="Information Technology" style="width: 200px;" required /></td>
         </tr>
         <tr>
-          <td>Common:</td><td><input type="text" name="commonName" style="width: 200px;" required /></td>
-        </tr>
-        <tr>
-          <td>Alternate:</td><td><input type="text" name="altName" style="width: 200px;" /></td>
+          <td>Common Name:</td><td><input type="text" name="commonName" style="width: 200px;" required /></td>
         </tr>
       </table>
-      <button type="Submit">SUBMIT TO ME MORTAL</button>
+      <button type="Submit">SUBMIT</button>
     </form>
   </body>
 </html>

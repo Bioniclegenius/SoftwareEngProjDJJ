@@ -37,7 +37,7 @@ public class Generate {
      * @param organizationUnit
      * @param commonName
      */
-    public void generate(String country, String state, String locality, String organization, String organizationUnit, String commonName, String altName) throws Exception{
+    public void generate(String country, String state, String locality, String organization, String organizationUnit, String commonName) throws Exception{
         KeyPairGenerator gen = KeyPairGenerator.getInstance("RSA");
         gen.initialize(2048);
         KeyPair pair = gen.generateKeyPair();
@@ -49,6 +49,7 @@ public class Generate {
         
         PKCS10CertificationRequestBuilder builder = new JcaPKCS10CertificationRequestBuilder(subject, publicKey);
         PKCS10CertificationRequest csr = builder.build(signGen);
+        
         //PrivateKey to String
         PemObject pemObject = new PemObject("RSA PRIVATE KEY", privateKey.getEncoded());
         StringWriter stringWriter = new StringWriter();

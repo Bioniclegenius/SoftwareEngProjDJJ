@@ -64,18 +64,15 @@ public class CreateKeystore {
             KeyStore.ProtectionParameter protParam = new KeyStore.PasswordProtection(password);
             
             //Importing Certificate Chain
-            //Certificate[] chain;
             InputStream certStream = new ByteArrayInputStream(cert.getBytes("UTF-8"));;
             Collection c = cf.generateCertificates(certStream) ;
             Certificate[] certChain = new Certificate[c.toArray().length];
 
             if (c.size() == 1) {
                 certStream = new ByteArrayInputStream(cert.getBytes("UTF-8"));
-                System.out.println("One certificate, no chain.");
                 Certificate cer = cf.generateCertificate(certStream);
                 certChain[0] = cer;
             } else {
-                System.out.println("Certificate chain length: " + c.size());
                 certChain = (Certificate[])c.toArray();
             }
             certStream.close();

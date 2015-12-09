@@ -7,7 +7,7 @@
 <%@page import="java.io.FileOutputStream"%>
 <%@page import="java.io.File"%>
 <%@page import="java.security.KeyStore"%>
-<%@page contentType="applicaton/octet-stream"%><!--"text/html" pageEncoding="UTF-8"%> -->
+<%@page contentType="applicaton/octet-stream"%>
 <%@ page language="java" import="java.util.*" %>
 <jsp:useBean id="create" scope="session" class="com.commerceBank.studentProject.CreateKeystore"/>
 <%
