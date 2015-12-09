@@ -1,0 +1,14 @@
+For installing the product to use:
+
+Install and run Tomcat 6.
+
+Copy the files in Project Files -> Commerce Bank Project -> web to your local www directory, preferably in its own folder. Copy the jar files to a relevant directory as well.
+
+Open up a browser to that directory, and presto!
+
+
+For opening the project in Netbeans:
+
+Install Netbeans, along with JDK/JRE 6.
+
+Run Netbeans as administrator, and open the project.
